@@ -12,39 +12,35 @@ public class MovementScript : MonoBehaviour
     public Animator Animation;
     public Animator ArmAnimation;
     public int equip = 0;
-    private float isMoving;
-    private Vector3 mouseToWorld;
     public GameObject hold;
-    private GameObject copy;
-    private GameObject Slash;
-    private Quaternion armangle;
     public double SlashSpeed = 2;
     public bool canSlash = true;
     public double timer;
     public GameObject InventoryParent;
     public bool canJab;
     public Vector3 toDash;
-
     public Rigidbody2D RD;
     public double timerP = 0;
     public GameObject SlashObj;
     public GameObject JabObj;
-    private double timerS = 0;
-    private SlashBehaviour SlashBehaviour;
-    private GameObject SwordUse;
     public Vector3 movePlace;
     public bool canDash = true;
     public bool isdash = false;
     public float dashSpeed = 300;
     public float dashDuration = 0.2f;
     public float dashCooldown = 1;
-    // Start is called before the first frame update
+
+    private GameObject copy;
+    private GameObject Slash;
+    private Quaternion armangle;
+    private float isMoving;
+    private Vector3 mouseToWorld;
+    private double timerS = 0;
+    private SlashBehaviour SlashBehaviour;
+    private GameObject SwordUse;
+    
    
-    void Start()
-    {
-
-    }
-
+  
     // Update is called once per frame
     void Update()
     {
@@ -59,9 +55,7 @@ public class MovementScript : MonoBehaviour
 
                 GameManager.instance.SlashFX(Arm.transform.position, Arm.transform.rotation, Arm.transform, canJab);              
                 ArmAnimation.SetTrigger("Slash");
-
-                
-
+ 
             }
             else
             {
@@ -91,26 +85,22 @@ public class MovementScript : MonoBehaviour
 
         if (Input.GetKey(KeyCode.D))
         {
-            movePlace += Vector3.right ;
             transform.position += Vector3.right * movementSpeed * Time.deltaTime;
         }
     
         if (Input.GetKey(KeyCode.A))
         {
-            transform.position += Vector3.left * movementSpeed * Time.deltaTime;
-            movePlace += Vector3.left;
+            transform.position += Vector3.left * movementSpeed * Time.deltaTime;       
         }
     
         if (Input.GetKey(KeyCode.W))
         {
-            transform.position += Vector3.up * movementSpeed * Time.deltaTime;
-            movePlace += Vector3.up;
+           transform.position += Vector3.up * movementSpeed * Time.deltaTime;
         }
       
         if (Input.GetKey(KeyCode.S))
         {
             transform.position += Vector3.down * movementSpeed * Time.deltaTime;
-            movePlace += Vector3.down;
         }
       
         
@@ -123,7 +113,6 @@ public class MovementScript : MonoBehaviour
             RD.AddForce(direction * dashSpeed, ForceMode2D.Impulse);
             Invoke(nameof(Stop), dashDuration);
             isdash = false;
-            Debug.Log("RUT");
         }
         if (!canDash)
         {
@@ -164,55 +153,13 @@ public class MovementScript : MonoBehaviour
 
         if ((Input.GetKey(KeyCode.S)|| (Input.GetKey(KeyCode.W)|| (Input.GetKey(KeyCode.D)|| (Input.GetKey(KeyCode.A))))))
         {
-
             Animation.SetBool("Walk", true);
-
         }
         else
         {
-
             Animation.SetBool("Walk", false);
-
         }
-
-    
-
-
 }
-
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.layer == 6)
-        {
-            Destroy(collision.gameObject);
-           
-            for (int i = 0; i < 2; i++)
-            {
-               
-                Inventory.instance.AddItem(GameManager.instance.ItemList[1]);
-            }
-        }
-
-        if (collision.gameObject.layer == 7 && collision.gameObject.tag == "RockDrop")
-        {
-            Destroy(collision.gameObject);
-            for (int i = 0; i < Random.Range(1, 2); i++)
-            {
-                
-                Inventory.instance.AddItem(GameManager.instance.ItemList[0]);
-            }
-        }
-        if (collision.gameObject.layer == 7 && collision.gameObject.tag == "IronDrop")
-        {
-            Destroy(collision.gameObject);
-            for (int i = 0; i < Random.Range(1, 2); i++)
-            {
-               
-                Inventory.instance.AddItem(GameManager.instance.ItemList[5]);
-            }
-        }
-    }
 
    public void Equip(GameObject sword, bool IsStraight, double slashSpeed, bool jaber)
     {
