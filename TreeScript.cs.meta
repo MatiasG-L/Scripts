@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 7ad072c98350aad4a92c5a8434672ff8
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - WoodDrop: {fileID: 1650785546140358608, guid: 800c138cf02038a469d3ab25c5c01336, type: 3}
+  - Tree: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
