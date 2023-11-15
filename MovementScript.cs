@@ -29,6 +29,11 @@ public class MovementScript : MonoBehaviour
     public float dashSpeed = 300;
     public float dashDuration = 0.2f;
     public float dashCooldown = 1;
+    public float supSlashCooldown = 3;
+    public bool canSupSlash;
+    public float timerA = 0;
+    public GameObject SwordUse;
+    public double atkBuff;
 
     private GameObject copy;
     private GameObject Slash;
@@ -37,7 +42,7 @@ public class MovementScript : MonoBehaviour
     private Vector3 mouseToWorld;
     private double timerS = 0;
     private SlashBehaviour SlashBehaviour;
-    private GameObject SwordUse;
+    private GameObject superSlasher;
     
    
   
@@ -159,14 +164,35 @@ public class MovementScript : MonoBehaviour
         {
             Animation.SetBool("Walk", false);
         }
-}
 
-   public void Equip(GameObject sword, bool IsStraight, double slashSpeed, bool jaber)
+        if(Input.GetKeyDown(KeyCode.Mouse1) && canSupSlash)
+        {
+            ArmAnimation.SetTrigger("Slash");
+            GameManager.instance.SlashFX(Arm.transform.position, Arm.transform.rotation, Arm.transform, superSlasher);
+            canSupSlash = false;
+        }
+
+        if (!canSupSlash)
+        {
+            timerA += Time.deltaTime;
+            if (timerA >= supSlashCooldown)
+            {
+                canSupSlash = true;
+                timerA = 0;
+            }
+
+        }
+    }
+
+   public void Equip(GameObject sword, bool IsStraight, double slashSpeed, bool jaber, GameObject superSlaher, double atkBuff)
     {
         SwordUse = sword;
         canJab = jaber;
         canSlash = false;
         SlashSpeed = slashSpeed;
+        superSlasher = superSlaher;
+        this.atkBuff = atkBuff;
+
         if (mouseToWorld.x > transform.position.x && IsStraight == false)
         {
             armangle = Quaternion.Euler(0, 0, 45);

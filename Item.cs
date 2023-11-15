@@ -15,6 +15,8 @@ public class Item : ScriptableObject
     public bool isStraight = false;
     public double slashSpeed = 1;
     public bool jaber = false;
+    public GameObject superSlasher;
+    public double atkBuff = 1;
   
     public virtual void Use()
     {
@@ -30,7 +32,7 @@ public class Item : ScriptableObject
                 return;
             }
             movement.equip = 1;
-            movement.Equip(Sword, isStraight, slashSpeed, jaber);
+            movement.Equip(Sword, isStraight, slashSpeed, jaber, superSlasher, atkBuff);
               
             
         

@@ -5,17 +5,18 @@ using UnityEngine;
 public class SlashBehaviour : MonoBehaviour
 {
     public GameObject Player;
-    private SpriteRenderer rend;
+    public MovementScript PlayerData;
+    public bool isSuper;
     private double timerS = 0;
     private float speed = 1;
+    private double atkBuff = 1;
 
     // Start is called before the first frame update
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player").gameObject;
-        rend = GetComponent<SpriteRenderer>();
-      
-       
+        PlayerData = Player.GetComponent<MovementScript>();
+        atkBuff = PlayerData.atkBuff;
     }
 
     // Update is called once per frame
@@ -48,9 +49,12 @@ public class SlashBehaviour : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             speed = 0;
-            collision.gameObject.GetComponent<EnemyAI>().Health -= 10;
-            collision.gameObject.GetComponent<EnemyAI>().PlayFeedback(Player.gameObject);
-
+            double damageDealt;
+            damageDealt = Random.Range(4, 8) * atkBuff;
+            if (isSuper) damageDealt *= 2;
+            collision.gameObject.GetComponent<EnemyAI>().Health -= damageDealt;
+            collision.gameObject.GetComponent<EnemyAI>().Knockback(Player.gameObject, isSuper);
+            Debug.Log("Dealt: "+damageDealt+" Damadge");
             if (Player.GetComponent<MovementScript>().canJab) Destroy(gameObject);
             
         }

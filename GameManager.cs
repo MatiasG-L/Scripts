@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     public MovementScript movement;
     public GameObject SlashObj;
     public GameObject JabObj;
+    public double atkBuff = 1;
 
     private void Start()
     {
@@ -81,6 +82,7 @@ public class GameManager : MonoBehaviour
 
     public void SlashFX(Vector3 pos, Quaternion rotat, Transform paret, bool isJab)
     {
+        
         if (isJab)
         {
             Instantiate(JabObj, pos, rotat, paret);
@@ -89,7 +91,12 @@ public class GameManager : MonoBehaviour
         {
             Instantiate(SlashObj, pos, rotat, paret);
         }
+
+    }
+    public void SlashFX(Vector3 pos, Quaternion rotat, Transform paret, GameObject supSlash)
+    {
         
-     
+        Instantiate(supSlash, pos, rotat, paret);
+
     }
 }

@@ -25,12 +25,20 @@ public class EnemyAI : MonoBehaviour
         RB.velocity = Vector3.zero;
         OnEnd?.Invoke();
     }
-    public void PlayFeedback(GameObject sender)
+    public void Knockback(GameObject sender, bool issuper)
     {
         StopAllCoroutines();
         OnBegin?.Invoke();
         Vector2 direction = (transform.position - sender.transform.position).normalized;
-        RB.AddForce(direction * strong, ForceMode2D.Impulse);
+        if (issuper)
+        {
+            RB.AddForce(direction * strong *10f, ForceMode2D.Impulse);
+        }
+        else
+        {
+            RB.AddForce(direction * strong, ForceMode2D.Impulse);
+        }
+        
         StartCoroutine(Reset());
     }
     // Update is called once per frame
