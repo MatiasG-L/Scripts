@@ -13,6 +13,8 @@ public class EnemyAI : MonoBehaviour
     public UnityEvent OnBegin, OnEnd;
     public Animator ANM;
     public float timer = 0;
+    public float damageBuff = 1;
+    public float speed = 0.02f;
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player").gameObject;
@@ -75,7 +77,7 @@ public class EnemyAI : MonoBehaviour
         {
             ANM.SetBool("attack", false);
             ANM.SetBool("canwalk", true);
-            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, 0.02f);
+            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, speed);
         }
         else
         {
