@@ -15,6 +15,7 @@ public class EnemyAI : MonoBehaviour
     public float timer = 0;
     public float damageBuff = 1;
     public float speed = 0.02f;
+    public float attackDamage = 1;
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player").gameObject;
@@ -27,11 +28,17 @@ public class EnemyAI : MonoBehaviour
         RB.velocity = Vector3.zero;
         OnEnd?.Invoke();
     }
+    public void KnockbackAnm()
+    {
+        ANM.SetBool("knockback", false);
+    }
     public void Knockback(GameObject sender, bool issuper)
     {
         StopAllCoroutines();
         OnBegin?.Invoke();
         Vector2 direction = (transform.position - sender.transform.position).normalized;
+        ANM.SetBool("knockback", true);
+        Invoke(nameof(KnockbackAnm), 0.5f);
         if (issuper)
         {
             RB.AddForce(direction * strong *10f, ForceMode2D.Impulse);
@@ -61,19 +68,24 @@ public class EnemyAI : MonoBehaviour
             transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y);
         }
 
+        if (ANM.GetBool("knockback"))
+        {
+            ANM.SetBool("attack", false);
+            ANM.SetBool("canwalk", false);
+        }
 
-        if (Vector3.Distance(transform.position, Player.transform.position) < 3)
+        if (Vector3.Distance(transform.position, Player.transform.position) < 3 && !ANM.GetBool("knockback"))
         {
             ANM.SetBool("attack", true);
             ANM.SetBool("canwalk", false);
             timer += Time.deltaTime;
             if (timer >= 0.4f)
             {
-                Player.GetComponent<MovementScript>().Health -= Random.Range(5, 10);
+                Player.GetComponent<MovementScript>().Health -= Random.Range(5, 10)*attackDamage;
                 timer = 0;
             }        
         }
-        else if (Vector3.Distance(transform.position, Player.transform.position) < 20)
+        else if (Vector3.Distance(transform.position, Player.transform.position) < 20 && !ANM.GetBool("knockback"))
         {
             ANM.SetBool("attack", false);
             ANM.SetBool("canwalk", true);
@@ -81,8 +93,11 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            ANM.SetBool("attack", false);
-            ANM.SetBool("canwalk", false);
+            if (!ANM.GetBool("knockback"))
+            {
+                ANM.SetBool("attack", false);
+                ANM.SetBool("canwalk", false);
+            }
         }
 
     }
