@@ -34,6 +34,7 @@ public class MovementScript : MonoBehaviour
     public float timerA = 0;
     public GameObject SwordUse;
     public double atkBuff;
+    public DashIconScript iconScript;
 
     private GameObject copy;
     private GameObject Slash;
@@ -114,6 +115,7 @@ public class MovementScript : MonoBehaviour
         {
             canDash = false;
             isdash = true;
+            iconScript.Icon.fillAmount = 0;
             Vector2 direction = (transform.position - mouseToWorld).normalized * -1;
             RD.AddForce(direction * dashSpeed, ForceMode2D.Impulse);
             Invoke(nameof(Stop), dashDuration);
