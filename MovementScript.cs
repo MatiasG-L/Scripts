@@ -35,6 +35,7 @@ public class MovementScript : MonoBehaviour
     public GameObject SwordUse;
     public double atkBuff;
     public DashIconScript iconScript;
+    public SlashIconScript slashIconScript;
 
     private GameObject copy;
     private GameObject Slash;
@@ -170,10 +171,11 @@ public class MovementScript : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Mouse1) && canSupSlash)
         {
             ArmAnimation.SetTrigger("Slash");
+            slashIconScript.Icon.fillAmount = 0;
             GameManager.instance.SlashFX(Arm.transform.position, Arm.transform.rotation, Arm.transform, superSlasher);
             canSupSlash = false;
         }
-
+        
         if (!canSupSlash)
         {
             timerA += Time.deltaTime;
@@ -188,6 +190,8 @@ public class MovementScript : MonoBehaviour
 
    public void Equip(GameObject sword, bool IsStraight, double slashSpeed, bool jaber, GameObject superSlaher, double atkBuff)
     {
+        
+        
         SwordUse = sword;
         canJab = jaber;
         canSlash = false;
