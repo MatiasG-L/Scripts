@@ -14,14 +14,14 @@ public class DashIconScript : MonoBehaviour
     {
         movement = GameObject.FindGameObjectWithTag("Player").GetComponent<MovementScript>();
         Icon.fillAmount = 0;
-        lerpspeed = 0.4f * Time.deltaTime;
+        lerpspeed = 0.5f ;
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        Icon.fillAmount = Mathf.Lerp(Icon.fillAmount, 1, lerpspeed);
+        Icon.fillAmount = Mathf.MoveTowards(Icon.fillAmount, 1, lerpspeed * Time.deltaTime);
         ColorChanger();
     }
     void ColorChanger()

@@ -167,7 +167,14 @@ public class MovementScript : MonoBehaviour
         {
             Animation.SetBool("Walk", false);
         }
-
+        if (InventoryParent.active) 
+        {
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+        }
         if(Input.GetKeyDown(KeyCode.Mouse1) && canSupSlash)
         {
             ArmAnimation.SetTrigger("Slash");

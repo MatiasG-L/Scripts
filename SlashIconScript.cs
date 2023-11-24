@@ -14,19 +14,23 @@ public class SlashIconScript : MonoBehaviour
     {
         movement = GameObject.FindGameObjectWithTag("Player").GetComponent<MovementScript>();
         Icon.fillAmount = 0;
-        lerpspeed = 0.1f * Time.deltaTime;
+        lerpspeed = 0.125f;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        Icon.fillAmount = Mathf.Lerp(Icon.fillAmount, 1, lerpspeed);
-        ColorChanger();
+        Icon.fillAmount = Mathf.MoveTowards(Icon.fillAmount, 1, lerpspeed * Time.deltaTime);
+        //  Icon.fillAmount = Mathf.Lerp(Icon.fillAmount, 1, lerpspeed);
+        if (Icon.fillAmount < 1)
+        {
+            Icon.color = Color.gray * 0.8f;
+        }
+        else
+        {
+            Icon.color = Color.white;
+        }
     }
-    void ColorChanger()
-    {
-        Color IconColor = Color.Lerp(Color.black, Color.white, Icon.fillAmount);
-        Icon.color = IconColor;
+
     }
-}

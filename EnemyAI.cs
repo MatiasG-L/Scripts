@@ -14,11 +14,12 @@ public class EnemyAI : MonoBehaviour
     public Animator ANM;
     public float timer = 0;
     public float damageBuff = 1;
-    public float speed = 0.02f;
+    public float speed;
     public float attackDamage = 1;
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player").gameObject;
+        
     }
 
     private IEnumerator Reset()
@@ -89,7 +90,7 @@ public class EnemyAI : MonoBehaviour
         {
             ANM.SetBool("attack", false);
             ANM.SetBool("canwalk", true);
-            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, speed);
+            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, speed * Time.deltaTime);
         }
         else
         {
