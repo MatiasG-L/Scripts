@@ -22,7 +22,7 @@ public class SlashIconScript : MonoBehaviour
     void Update()
     {
         Icon.fillAmount = Mathf.MoveTowards(Icon.fillAmount, 1, lerpspeed * Time.deltaTime);
-        //  Icon.fillAmount = Mathf.Lerp(Icon.fillAmount, 1, lerpspeed);
+        
         if (Icon.fillAmount < 1)
         {
             Icon.color = Color.gray * 0.8f;
