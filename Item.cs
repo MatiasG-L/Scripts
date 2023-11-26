@@ -9,20 +9,15 @@ public class Item : ScriptableObject
     
     new public string name = "Default Item";
     public Sprite icon = null;
+    public int DropChance;
     public string itemDescription = "used for crafting";
     public MovementScript movement;
-    [SerializeField]
-    private GameObject Sword;
-    [SerializeField]
-    private bool isStraight = false;
-    [SerializeField]
-    private double slashSpeed = 1;
-    [SerializeField]
-    private bool jaber = false;
-    [SerializeField]
-    private GameObject superSlasher;
-    [SerializeField]
-    private double atkBuff = 1;
+    public GameObject Sword;
+    public bool isStraight = false;
+    public double slashSpeed = 1;
+    public bool jaber = false;
+    public GameObject superSlasher;
+    public double atkBuff = 1;
 
     public virtual void Use()
     {

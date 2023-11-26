@@ -9,16 +9,18 @@ public class EnemyAI : MonoBehaviour
     public Rigidbody2D RB;
     public float strong = 16, delay = 0.15f;
     private GameObject Player;
+    public float AttackSpeed = 0.4f;
     // Start is called before the first frame update
     public UnityEvent OnBegin, OnEnd;
     public Animator ANM;
     public float timer = 0;
+    public float timerA = 0;
     public float speed;
     public float damageBuff = 1;
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player").gameObject;
-        
+        if (gameObject.name == "Rocker") AttackSpeed = 0.9f;
     }
 
     private IEnumerator Reset()
@@ -79,10 +81,18 @@ public class EnemyAI : MonoBehaviour
             ANM.SetBool("attack", true);
             ANM.SetBool("canwalk", false);
             timer += Time.deltaTime;
-            if (timer >= 0.4f)
+            timerA += Time.deltaTime;
+            if (timerA >= 1f)
             {
+                if (gameObject.name == "Rocker") Destroy(gameObject);
+            }
+            if (timer >= AttackSpeed)
+            {
+                
                 Player.GetComponent<MovementScript>().Health -= Random.Range(5, 10)* damageBuff;
                 timer = 0;
+                
+                
             }        
         }
         else if (Vector3.Distance(transform.position, Player.transform.position) < 20 && !ANM.GetBool("knockback"))

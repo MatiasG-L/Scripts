@@ -206,7 +206,7 @@ public class MovementScript : MonoBehaviour
             slashIconScript.Icon.fillAmount = 0;
             for(int i = 0; i < 10; i++)
             {
-                GameManager.instance.SlashFX(Arm.transform.position + new Vector3(0,Random.Range(6,-6),0), Arm.transform.rotation, Arm.transform, canJab);
+                GameManager.instance.SlashFX(Arm.transform.position + new Vector3(0,Random.Range(3,-3),0), Arm.transform.rotation, Arm.transform, canJab);
             }
 
             canSupSlash = false;
