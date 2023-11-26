@@ -4,6 +4,20 @@ using UnityEngine;
 
 public class MovementScript : MonoBehaviour
 {
+    #region singleton
+    public static MovementScript instance;
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+
+
+
+    #endregion
+
     public float movementSpeed;
     public Camera cam;
     public GameObject Arm;
@@ -53,6 +67,10 @@ public class MovementScript : MonoBehaviour
     {
         
 
+        if (Health > maxHealth)
+        {
+            Health = maxHealth;
+        }
 
         if (Input.GetKeyDown(KeyCode.Mouse0) && canSlash && (!InventoryParent.active))
         {
@@ -62,17 +80,17 @@ public class MovementScript : MonoBehaviour
 
                 GameManager.instance.SlashFX(Arm.transform.position, Arm.transform.rotation, Arm.transform, canJab);              
                 ArmAnimation.SetTrigger("Slash");
+                SlashCooldown.instance.transform.localScale = new Vector3(0, SlashCooldown.instance.transform.localScale.y);
  
             }
             else
             {
                 GameManager.instance.SlashFX(Arm.transform.position, Arm.transform.rotation, Arm.transform, canJab);
                 ArmAnimation.SetTrigger("Jab");
-
-            }
-
-            
+                SlashCooldown.instance.transform.localScale = new Vector3(0, SlashCooldown.instance.transform.localScale.y);
+            } 
         }
+
         if (!canSlash) 
         { 
             timer += Time.deltaTime;
@@ -81,7 +99,6 @@ public class MovementScript : MonoBehaviour
                 canSlash = true;
                 timer = 0;
             }
-
         }
         
         mouseToWorld = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y));
@@ -122,6 +139,7 @@ public class MovementScript : MonoBehaviour
             Invoke(nameof(Stop), dashDuration);
             isdash = false;
         }
+
         if (!canDash)
         {
             timerP += Time.deltaTime;
@@ -169,20 +187,31 @@ public class MovementScript : MonoBehaviour
         }
         if (InventoryParent.active) 
         {
-            Time.timeScale = 0f;
+            Time.timeScale = 0.2f;
         }
         else
         {
             Time.timeScale = 1f;
         }
-        if(Input.GetKeyDown(KeyCode.Mouse1) && canSupSlash)
+        if(Input.GetKeyDown(KeyCode.Mouse1) && canSupSlash && !canJab)
         {
             ArmAnimation.SetTrigger("Slash");
             slashIconScript.Icon.fillAmount = 0;
             GameManager.instance.SlashFX(Arm.transform.position, Arm.transform.rotation, Arm.transform, superSlasher);
             canSupSlash = false;
         }
-        
+        if (Input.GetKeyDown(KeyCode.Mouse1) && canSupSlash && canJab)
+        {
+            ArmAnimation.SetTrigger("Slash");
+            slashIconScript.Icon.fillAmount = 0;
+            for(int i = 0; i < 10; i++)
+            {
+                GameManager.instance.SlashFX(Arm.transform.position + new Vector3(0,Random.Range(6,-6),0), Arm.transform.rotation, Arm.transform, canJab);
+            }
+
+            canSupSlash = false;
+        }
+
         if (!canSupSlash)
         {
             timerA += Time.deltaTime;

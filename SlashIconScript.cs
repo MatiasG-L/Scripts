@@ -14,14 +14,15 @@ public class SlashIconScript : MonoBehaviour
     {
         movement = GameObject.FindGameObjectWithTag("Player").GetComponent<MovementScript>();
         Icon.fillAmount = 0;
-        lerpspeed = 0.125f;
+        lerpspeed = movement.supSlashCooldown;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        Icon.fillAmount = Mathf.MoveTowards(Icon.fillAmount, 1, lerpspeed * Time.deltaTime);
+        lerpspeed = movement.supSlashCooldown;
+        Icon.fillAmount = Mathf.MoveTowards(Icon.fillAmount, 1, Time.deltaTime / lerpspeed);
         
         if (Icon.fillAmount < 1)
         {

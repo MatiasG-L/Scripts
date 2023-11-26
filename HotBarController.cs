@@ -20,7 +20,7 @@ public class HotBarController : MonoBehaviour
             if (Input.GetKeyDown(hotbarKeys[i]))
             {
                 //Debug.Log("USe Item " + i);
-                hotbarSlots[i].UseItem();
+                    hotbarSlots[i].UseItem();
                 return;
             }
         }

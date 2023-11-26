@@ -9,10 +9,10 @@ using UnityEngine;
 public class Statitem : Item
 {
     public StatItemType itemType;
-    public int amount;
+    public float amount;
     public override void Use()
     {
-        base.Use();
+        
         GameManager.instance.OnStatItemUsed(itemType, amount);
         Inventory.instance.RemoveItem(this);
     }
@@ -21,7 +21,9 @@ public class Statitem : Item
 
 public enum StatItemType 
 {
-    HealthItem,
-    ThirstItem,
-    FoodItem
+    Heal,
+    HealthIncrease,
+    SpeedBuff1,
+    SpeedBuff2,
+    StrengthBuff
 }

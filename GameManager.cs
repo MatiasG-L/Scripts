@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public List<Item> carftingRecipes = new List<Item>();
     public Transform canvas;
     public GameObject ItemInfoPrefab;
+    public GameObject InventoryParent;
     private GameObject currentItemInfo = null;
     public Transform mainCanvas;
     public Transform hotbarTransform;
@@ -38,6 +39,8 @@ public class GameManager : MonoBehaviour
     }
     public void Update()
     {
+       
+
         if (Input.GetKeyDown(KeyCode.X))
         {
             Item newItem = ItemList[Random.Range(0, ItemList.Count)];
@@ -53,12 +56,36 @@ public class GameManager : MonoBehaviour
         {
            
         }
-     
+
+        if (!InventoryParent.active && currentItemInfo.gameObject.activeSelf)
+        {
+            Destroy(currentItemInfo.gameObject);
+        }
     }
 
-    public void OnStatItemUsed(StatItemType itemType, int amount)
+    public void OnStatItemUsed(StatItemType itemType, float amount)
     {
         Debug.Log("Consuming: " + itemType + "Add Amount: " + amount);
+        if(itemType == StatItemType.Heal)
+        {
+            movement.Health += amount;
+        }
+        if (itemType == StatItemType.HealthIncrease)
+        {
+            movement.maxHealth += amount;
+        }
+        if (itemType == StatItemType.SpeedBuff1)
+        {
+            movement.dashCooldown -= amount;
+        }
+        if (itemType == StatItemType.SpeedBuff2)
+        {
+            movement.movementSpeed += amount;
+        }
+        if (itemType == StatItemType.StrengthBuff)
+        {
+            movement.atkBuff += amount;
+        }
     }
 
     public void DisplayItemInfo(string itemName, string itemDescription, Vector2 buttonPos)
@@ -78,6 +105,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(currentItemInfo.gameObject);
         }
+     
+
     }
 
     public void SlashFX(Vector3 pos, Quaternion rotat, Transform paret, bool isJab)

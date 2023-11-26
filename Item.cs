@@ -6,18 +6,24 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Item", menuName = "Item/base")]
 public class Item : ScriptableObject
 {
-
+    
     new public string name = "Default Item";
     public Sprite icon = null;
     public string itemDescription = "used for crafting";
     public MovementScript movement;
-    public GameObject Sword;
-    public bool isStraight = false;
-    public double slashSpeed = 1;
-    public bool jaber = false;
-    public GameObject superSlasher;
-    public double atkBuff = 1;
-  
+    [SerializeField]
+    private GameObject Sword;
+    [SerializeField]
+    private bool isStraight = false;
+    [SerializeField]
+    private double slashSpeed = 1;
+    [SerializeField]
+    private bool jaber = false;
+    [SerializeField]
+    private GameObject superSlasher;
+    [SerializeField]
+    private double atkBuff = 1;
+
     public virtual void Use()
     {
         movement = GameObject.FindGameObjectWithTag("Player").GetComponent<MovementScript>();

@@ -13,9 +13,8 @@ public class EnemyAI : MonoBehaviour
     public UnityEvent OnBegin, OnEnd;
     public Animator ANM;
     public float timer = 0;
-    public float damageBuff = 1;
     public float speed;
-    public float attackDamage = 1;
+    public float damageBuff = 1;
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player").gameObject;
@@ -82,7 +81,7 @@ public class EnemyAI : MonoBehaviour
             timer += Time.deltaTime;
             if (timer >= 0.4f)
             {
-                Player.GetComponent<MovementScript>().Health -= Random.Range(5, 10)*attackDamage;
+                Player.GetComponent<MovementScript>().Health -= Random.Range(5, 10)* damageBuff;
                 timer = 0;
             }        
         }

@@ -50,7 +50,7 @@ public class SlashBehaviour : MonoBehaviour
         {
             speed = 0;
             double damageDealt;
-            damageDealt = Random.Range(4, 8) * atkBuff;
+            damageDealt = Random.Range(4, 8) * atkBuff * PlayerData.atkBuff;
             if (isSuper) damageDealt *= 2;
             collision.gameObject.GetComponent<EnemyAI>().Health -= damageDealt;
             collision.gameObject.GetComponent<EnemyAI>().Knockback(Player.gameObject, isSuper);
