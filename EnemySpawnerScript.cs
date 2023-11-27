@@ -9,6 +9,8 @@ public class EnemySpawnerScript : MonoBehaviour
     public int EnemyCount = 4;
     public float Cooldown = 10;
     public int MaxEnemyCount = 5;
+    public float Health = 250;
+    public double range = 10;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +20,12 @@ public class EnemySpawnerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (Health <= 0)
+        {
+        Destroy(gameObject);
+        }
+        
         timerA += Time.deltaTime;
         if (timerA >= Cooldown)
         {
