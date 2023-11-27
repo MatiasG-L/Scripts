@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LootDrop : MonoBehaviour
 {
+    public GameObject player;
     public List<Item> Drops = new List<Item>();
     // Start is called before the first frame update
     public Item GetItemDrop()
@@ -27,5 +28,18 @@ public class LootDrop : MonoBehaviour
         Debug.Log("No Drop");
         return null;
         
+    }
+
+
+    void Update()
+    {
+       
+        if (Vector3.Distance(transform.position, player.transform.position) <= 3)
+        {
+            
+            Inventory.instance.AddItem(Instantiate(GetComponent<LootDrop>().GetItemDrop()));
+            Destroy(gameObject);
+           
+        }
     }
 }

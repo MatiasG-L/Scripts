@@ -34,13 +34,13 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        Inventory.instance.AddItem(GameManager.instance.ItemList[1]);
+        Inventory.instance.AddItem(GameManager.instance.ItemList[0]);
        
     }
     public void Update()
     {
        
-
+        /*
         if (Input.GetKeyDown(KeyCode.X))
         {
             Item newItem = ItemList[Random.Range(0, ItemList.Count)];
@@ -48,14 +48,8 @@ public class GameManager : MonoBehaviour
             Inventory.instance.AddItem(Instantiate(newItem));
         }
     
-        if (movement.equip == 1)
-        {
-            
-        }
-        else 
-        {
-           
-        }
+        */
+
 
         if (!InventoryParent.active && currentItemInfo.gameObject.activeSelf)
         {
