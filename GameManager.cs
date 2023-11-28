@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     public List<Item> ItemList = new List<Item>();
     public List<Item> carftingRecipes = new List<Item>();
+    [SerializeField]
+    public static List<Item> playerInventory = new List<Item>();
     public Transform canvas;
     public GameObject ItemInfoPrefab;
     public GameObject InventoryParent;
@@ -33,8 +36,11 @@ public class GameManager : MonoBehaviour
     public double atkBuff = 1;
 
     private void Start()
+
     {
+        Inventory.instance.inventoryItemList = playerInventory;
         Inventory.instance.AddItem(GameManager.instance.ItemList[0]);
+        
        
     }
     public void Update()
@@ -122,4 +128,32 @@ public class GameManager : MonoBehaviour
         Instantiate(supSlash, pos, rotat, paret);
 
     }
+    public void GoToScene(string Scene)
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(Scene);
+    }
+    public void GoToScene()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("Level Select");
+    }
+    public void updatePlayerInventory()
+    {
+        clearPlayerInventory();
+        for (int i = 0; i < Inventory.instance.inventoryItemList.Count; i++)
+        {
+            playerInventory.Add(Inventory.instance.inventoryItemList[i]);
+        }
+        for (int i = 0; i < Inventory.instance.hotbarItemList.Count; i++)
+        {
+            playerInventory.Add(Inventory.instance.hotbarItemList[i]);
+        }
+    }
+
+    public void clearPlayerInventory()
+    {
+        playerInventory.Clear();
+    }
+
 }

@@ -33,7 +33,7 @@ public class LootDrop : MonoBehaviour
 
     void Update()
     {
-       
+       /*
         if (Vector3.Distance(transform.position, player.transform.position) <= 3)
         {
             
@@ -41,5 +41,6 @@ public class LootDrop : MonoBehaviour
             Destroy(gameObject);
            
         }
+       */
     }
 }

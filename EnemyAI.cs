@@ -58,6 +58,7 @@ public class EnemyAI : MonoBehaviour
         
         if (Health <= 0)
         {
+            MovementScript.instance.Health += 5;
             Destroy(gameObject);
         }
         if (Player.transform.position.x > transform.position.x)
@@ -76,7 +77,7 @@ public class EnemyAI : MonoBehaviour
             ANM.SetBool("canwalk", false);
         }
 
-        if (Vector3.Distance(transform.position, Player.transform.position) < 3 && !ANM.GetBool("knockback"))
+        if (Vector3.Distance(transform.position, Player.transform.position) < 3.5 && !ANM.GetBool("knockback"))
         {
             ANM.SetBool("attack", true);
             ANM.SetBool("canwalk", false);

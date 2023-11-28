@@ -56,7 +56,18 @@ public class SlashBehaviour : MonoBehaviour
             collision.gameObject.GetComponent<EnemyAI>().Knockback(Player.gameObject, isSuper);
             Debug.Log("Dealt: "+damageDealt+" Damadge");
             if (Player.GetComponent<MovementScript>().canJab) Destroy(gameObject);
-            
+
+        }
+        if (collision.gameObject.tag == "EnemySP")
+        {
+            speed = 0;
+            double damageDealt;
+            damageDealt = Random.Range(4, 8) * atkBuff * PlayerData.atkBuff;
+            if (isSuper) damageDealt *= 2;
+            collision.gameObject.GetComponent<EnemySpawnerScript>().Health -= (float)damageDealt;
+            Debug.Log("Dealt: " + damageDealt + " Damadge");
+            if (Player.GetComponent<MovementScript>().canJab) Destroy(gameObject);
+
         }
     }
         

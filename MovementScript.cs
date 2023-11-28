@@ -71,6 +71,12 @@ public class MovementScript : MonoBehaviour
         {
             Health = maxHealth;
         }
+        if( Health <= 0)
+        {
+            Health = 0;
+            GameManager.instance.clearPlayerInventory();
+            GameManager.instance.GoToScene("DEATH");
+        }
 
         if (Input.GetKeyDown(KeyCode.Mouse0) && canSlash && (!InventoryParent.active))
         {
